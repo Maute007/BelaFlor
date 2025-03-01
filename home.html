@@ -115,9 +115,6 @@
             text-align: center;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
             animation: glow 2s ease-in-out infinite alternate;
-            position: static; /* Não fixo */
-            transform: none; /* Remove o translateX */
-            left: auto; /* Remove o posicionamento absoluto */
         }
 
         .navbar-top .logo::after {
@@ -127,7 +124,7 @@
             left: 50%;
             width: 0;
             height: 2px;
-            background: var(--white); /* Sublinhado em branco */
+            background: var(--white);
             transform: translateX(-50%);
             animation: underlineGrow 2s ease-in-out infinite alternate;
             border-radius: 2px;
@@ -208,7 +205,7 @@
             box-shadow: 0 5px 15px var(--shadow);
         }
 
-        /* Navbar iOS (Footer) com margem superior */
+        /* Navbar iOS (Footer) */
         .navbar-ios {
             position: fixed;
             bottom: 0;
@@ -222,7 +219,6 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            margin-top: 60px; /* Margem superior para evitar sobreposição */
         }
 
         .navbar-ios a {
@@ -241,12 +237,6 @@
         .navbar-ios a i {
             transition: color 0.3s ease;
         }
-
-        .navbar-ios a:nth-child(1) i { color: var(--black); } /* Marcações */
-        .navbar-ios a:nth-child(2) i { color: var(--black); } /* Serviços */
-        .navbar-ios a:nth-child(3) i { color: var(--black); } /* Home */
-        .navbar-ios a:nth-child(4) i { color: var(--black); } /* WhatsApp */
-        .navbar-ios a:nth-child(5) i { color: var(--black); } /* Sidebar */
 
         .navbar-ios a.active i,
         .navbar-ios a:hover i {
@@ -302,94 +292,100 @@
             color: var(--primary);
         }
 
-        /* Responsividade para todos os dispositivos */
+        /* Modal para Desktop */
+        #desktopModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 10px 30px var(--shadow);
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-family: 'Roboto', sans-serif;
+            color: var(--black);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--black);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-content .btn-close:hover {
+            color: var(--primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Esconder conteúdo em desktop */
+        body.desktop-blocked #loading,
+        body.desktop-blocked .navbar-top,
+        body.desktop-blocked .booking-section,
+        body.desktop-blocked .navbar-ios,
+        body.desktop-blocked #sidebar {
+            display: none !important;
+        }
+
+        /* Responsividade */
         @media (max-width: 767px) { /* Mobile */
-            .carousel-item {
-                height: 50vh;
-            }
-
-            .carousel-caption h1 {
-                font-size: 1.5rem;
-            }
-
-            .carousel-caption p {
-                font-size: 0.9rem;
-            }
-
-            .service-card, .booking-card {
+            .booking-card {
                 margin-bottom: 15px;
-            }
-
-            .gallery-img {
-                height: 160px;
-            }
-
-            .service-card,
-            .gallery-card {
-                flex: 0 0 100%;
-                max-width: 100%;
             }
         }
 
         @media (min-width: 768px) and (max-width: 1023px) { /* Tablet */
-            .carousel-item {
-                height: 60vh;
-            }
-
-            .carousel-caption h1 {
-                font-size: 2rem;
-            }
-
-            .service-card, .booking-card {
-                flex: 0 0 50%;
-                max-width: 50%;
-            }
-
-            .gallery-card {
+            .booking-card {
                 flex: 0 0 50%;
                 max-width: 50%;
             }
         }
-
-        @media (min-width: 1024px) { /* Desktop */
-            .carousel-item {
-                height: 70vh;
-            }
-
-            .carousel-caption h1 {
-                font-size: 2.5rem;
-            }
-
-            .service-card, .booking-card {
-                flex: 0 0 33.33%;
-                max-width: 33.33%;
-            }
-
-            .gallery-card {
-                flex: 0 0 25%;
-                max-width: 25%;
-            }
-
-            .container {
-                max-width: 1200px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        /* Modal para Desktop (mantido comentado, mas não removido) */
-        
-        <div id="desktopModal" class="d-flex">
-            <div class="modal-content">
-                <button type="button" class="btn-close" id="closeModal">×</button>
-                <h3>Exclusivo para Móveis</h3>
-                <p>Este site só está disponível em dispositivos móveis e tablets. Por favor, acesse de um celular ou tablet.</p>
-            </div>
-        </div>
-        
     </style>
 </head>
 <body>
+    <!-- Modal para Desktop -->
+    <div id="desktopModal" style="display: none;">
+        <div class="modal-content">
+            <button type="button" class="btn-close" id="closeModal">×</button>
+            <h3>Exclusivo para Dispositivos Móveis</h3>
+            <p>Este site foi projetado para funcionar apenas em celulares e tablets. Por favor, acesse de um dispositivo móvel.</p>
+        </div>
+    </div>
+
     <!-- Animação de Carregamento -->
     <div id="loading">
         <div class="loader"></div>
@@ -403,7 +399,7 @@
         </div>
     </nav>
 
-    <!-- Seção de Marcações (em vez do carousel) -->
+    <!-- Seção de Marcações -->
     <section class="booking-section">
         <div class="container">
             <h2 class="text-center mb-4" style="font-family: 'Playfair Display', serif; color: var(--black);">Marque Seu Atendimento</h2>
@@ -466,11 +462,11 @@
 
     <!-- Navbar iOS (Footer) -->
     <nav class="navbar-ios">
-        <a href="#agendar" class="active"><i class="fas fa-calendar-check"></i></a> <!-- Marcações -->
-        <a href="servicos.html"><i class="fas fa-spa"></i></a> <!-- Serviços -->
-        <a href="index.html"><i class="fas fa-home"></i></a> <!-- Home -->
-        <a href="https://wa.me/5511999999999" target="_blank"><i class="fab fa-whatsapp"></i></a> <!-- WhatsApp -->
-        <a href="#" id="sidebarToggle"><i class="fas fa-bars"></i></a> <!-- Sidebar -->
+        <a href="#agendar" class="active"><i class="fas fa-calendar-check"></i></a>
+        <a href="servicos.html"><i class="fas fa-spa"></i></a>
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="https://wa.me/5511999999999" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" id="sidebarToggle"><i class="fas fa-bars"></i></a>
     </nav>
 
     <!-- Sidebar -->
@@ -485,17 +481,6 @@
         </ul>
     </div>
 
-    <!-- Modal para Desktop (mantido comentado, mas não removido) -->
-    
-    <div id="desktopModal" class="d-flex">
-        <div class="modal-content">
-            <button type="button" class="btn-close" id="closeModal">×</button>
-            <h3>Exclusivo para Móveis</h3>
-            <p>Este site só está disponível em dispositivos móveis e tablets. Por favor, acesse de um celular ou tablet.</p>
-        </div>
-    </div>
-    
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -508,38 +493,29 @@
                 setTimeout(() => loading.style.display = 'none', 500);
             }, 1500);
 
-            
-            // Verificação de dispositivo (modal para desktop - comentado temporariamente)
-            let desktopCheckInterval;
+            // Verificação de dispositivo
             function checkDevice() {
                 const width = window.innerWidth;
-                if (width >= 1024) { // Considera desktop como acima de 1024px
-                    const modal = document.getElementById('desktopModal');
+                const modal = document.getElementById('desktopModal');
+                const body = document.body;
+
+                if (width >= 1024) { // Desktop
+                    body.classList.add('desktop-blocked');
                     modal.style.display = 'flex';
-
-                    // Fechar modal manualmente
-                    document.getElementById('closeModal').addEventListener('click', () => {
-                        modal.style.display = 'none';
-                        clearInterval(desktopCheckInterval); // Para de reaparecer ao fechar manualmente
-                    });
-
-                    // Reaparecer o modal a cada 2 segundos até o usuário fechar a aba
-                    desktopCheckInterval = setInterval(() => {
-                        if (modal.style.display === 'none') {
-                            modal.style.display = 'flex';
-                        }
-                    }, 2000);
+                } else { // Celular ou tablet
+                    body.classList.remove('desktop-blocked');
+                    modal.style.display = 'none';
                 }
             }
 
+            // Verificar ao carregar e ao redimensionar
             checkDevice();
             window.addEventListener('resize', checkDevice);
 
-            // Fechar modal ao fechar a aba
-            window.addEventListener('beforeunload', () => {
-                clearInterval(desktopCheckInterval);
+            // Fechar modal (opcional)
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('desktopModal').style.display = 'none';
             });
-            
 
             // Sidebar
             const sidebarToggle = document.getElementById('sidebarToggle');
@@ -589,12 +565,6 @@
                 }).then(() => {
                     bookingForm.reset();
                 });
-            });
-
-            // Garantir que o carousel funcione corretamente (se usado)
-            const carousel = new bootstrap.Carousel(document.getElementById('carouselBeleza'), {
-                interval: 5000,
-                ride: 'carousel'
             });
         });
     </script>
